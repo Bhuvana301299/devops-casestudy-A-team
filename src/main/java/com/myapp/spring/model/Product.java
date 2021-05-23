@@ -2,8 +2,6 @@ package com.myapp.spring.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,10 +10,16 @@ import javax.persistence.Table;
 
 public class Product {
 	
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", category=" + category + ", productName=" + productName
+				+ ", description=" + description + ", price=" + price + ", quantity=" + quantity + "]";
+	}
+
 	@Id
 	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="PRODUCT_ID")
-	private long productId;
+	private Long productId;
 	
 	@Column(name="CATEGORY",nullable=false)
 	private String category;
@@ -62,7 +66,11 @@ public class Product {
 	}
 
 	public long getProductId() {
-		return productId;
+		if(this.productId==null)
+		{
+			return 0;
+		}
+		return this.productId;
 	}
 
 	public void setProductId(long productId) {

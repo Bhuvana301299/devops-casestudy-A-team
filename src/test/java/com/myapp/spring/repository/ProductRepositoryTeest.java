@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myapp.spring.model.Product;
 
 @SpringBootTest
-public class ProductRepositoryTest {
+public class ProductRepositoryTeest {
 
 	@Autowired
 	private ProductRepository repository;
@@ -35,18 +35,18 @@ public class ProductRepositoryTest {
 	
 	}
 	
-//	@AfterEach
-//	public void cleanUp() {
-//		repository.deleteAll();
-//	}
-//	
+	@AfterEach
+	public void cleanUp() {
+		repository.deleteAll();
+	}
+	
 	@Test
 	
 	@DisplayName("Test product not found for a non existing id")
 	public void testProductNotFoundForNonExistingId() {
 		
 		
-		Product product =repository.findById(100).orElseGet(()-> new Product());
+		Product product =repository.findById(100L).orElseGet(()-> new Product());
 		Assertions.assertEquals(product.getProductId(),0,"Product with id 100 not exist");
 		
 	}
@@ -57,7 +57,7 @@ public class ProductRepositoryTest {
 	public void testProductSavedSucessfully() {
 		
 		Product product =new Product("mobile","Vivo","Vivo12pro",37545.0,30);
-		product.setProductId(5);
+		product.setProductId(5L);
 		
 		Product savedProduct =repository.save(product);
 		Assertions.assertNotNull(savedProduct," New Product should be saved");
@@ -74,26 +74,14 @@ public class ProductRepositoryTest {
 	public void testProductUpdatedSucessfully() {
 		
 		Product product =new Product("mobile","Oneplus","OnePlus9Pro",70000.00,4);
-		product.setProductId(1);
+		product.setProductId(1L);
 		
 		Product updatedProduct =repository.save(product);
 		
 		Assertions.assertEquals(product.getPrice(), updatedProduct.getPrice());
 		
 	}
-
-	@Test
-	@DisplayName("Test product deleted sucessfully")
-	public void testProductDeletedSucessfully() {
-		
-		Product product =new Product("mobile","Oneplus","OnePlus9Pro",70000.00,4);
-		product.setProductId(1);
-		
-		Product updatedProduct =repository.save(product);
-		
-		Assertions.assertEquals(product.getPrice(), updatedProduct.getPrice());
-		
-	}
+	
 	
 
 }
